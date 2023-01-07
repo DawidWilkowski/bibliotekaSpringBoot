@@ -24,7 +24,7 @@ public class Client {
 	private Long id;
 	private String name;
 	private String surname;
-
+	private int phoneNumber;
 	@ManyToOne
 	@JoinColumn(name = "library_id", nullable = false)
 	private Library library;
@@ -32,11 +32,17 @@ public class Client {
 	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Rental> rentals;
 
+	@ManyToOne
+	@JoinColumn(name = "organization_id")
+	private Organization organization;
+
 	public Client() {
 	}
 
-	public Client(String name, String surname, Library library) {
+	public Client(String name, String surname, int phoneNumber, Library library, Organization organization) {
+		this.organization = organization;
 		this.name = name;
+		this.phoneNumber = phoneNumber;
 		this.surname = surname;
 		this.library = library;
 	}
@@ -57,6 +63,14 @@ public class Client {
 		this.name = name;
 	}
 
+	public int getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(int phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
 	public String getSurname() {
 		return surname;
 	}
@@ -71,6 +85,14 @@ public class Client {
 
 	public void setLibrary(Library library) {
 		this.library = library;
+	}
+
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 
 }

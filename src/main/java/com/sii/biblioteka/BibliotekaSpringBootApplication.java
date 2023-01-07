@@ -12,13 +12,16 @@ import com.sii.biblioteka.entity.Book;
 import com.sii.biblioteka.entity.Client;
 import com.sii.biblioteka.entity.Department;
 import com.sii.biblioteka.entity.Library;
+import com.sii.biblioteka.entity.Organization;
 import com.sii.biblioteka.entity.Rental;
 import com.sii.biblioteka.repository.BookRepository;
 import com.sii.biblioteka.repository.ClientRepository;
 import com.sii.biblioteka.repository.DepartmentRepository;
 import com.sii.biblioteka.repository.LibraryRepository;
+import com.sii.biblioteka.repository.OrganizationRepository;
 import com.sii.biblioteka.repository.RentalRepository;
 import com.sii.biblioteka.util.BookCategory;
+import com.sii.biblioteka.util.ClientType;
 
 @SpringBootApplication
 public class BibliotekaSpringBootApplication implements CommandLineRunner {
@@ -38,6 +41,8 @@ public class BibliotekaSpringBootApplication implements CommandLineRunner {
 	ClientRepository clientRepository;
 	@Autowired
 	RentalRepository rentalRepository;
+	@Autowired
+	OrganizationRepository oragnizationInterface;
 
 	/**
 	 * Initialize H2 database with sample data
@@ -54,22 +59,31 @@ public class BibliotekaSpringBootApplication implements CommandLineRunner {
 
 		departamentRepository.saveAll(Arrays.asList(fantasyBydgoszcz, historyczneZakopane, naukaWarszawa));
 
+		Organization itsGoodToReadABook = new Organization(1L, "Its good to read a book", libraryBydgoszcz);
+		Organization youShouldRead = new Organization(2L, "You should read", libraryWarszawa);
+		Organization organization3 = new Organization(3L, "Organization 3", libraryWarszawa);
+
+		oragnizationInterface.saveAll(Arrays.asList(itsGoodToReadABook, youShouldRead, organization3));
+
 		Book infekcja = new Book("Infekcja", BookCategory.NORMALNA, "Andrzej Wardziak", "Apokalipsa zombie w Warszawie",
-				fantasyBydgoszcz);
+				29.99F, fantasyBydgoszcz);
 		Book zabicDrozda = new Book("Zabic drozda", BookCategory.OLD, "Harper Lee",
-				"Historia rasizmu w Stanach Zjednoczonych", historyczneZakopane);
-		Book wiedzmin = new Book("Wiedzmin", BookCategory.BESTSELLER, "Andrzej Sapkowski", "Książka fantasy",
+				"Historia rasizmu w Stanach Zjednoczonych", 39.99F, historyczneZakopane);
+		Book wiedzmin = new Book("Wiedzmin", BookCategory.BESTSELLER, "Andrzej Sapkowski", "Książka fantasy", 49.99F,
 				fantasyBydgoszcz);
 		bookRepository.saveAll(Arrays.asList(infekcja, zabicDrozda, wiedzmin));
 
-		Client tomaszPolak = new Client("Tomasz", "Polak", libraryBydgoszcz);
-		Client karolinaPierwsza = new Client("Karolina", "Pierwsza", libraryZakopane);
-		Client dominikNiejaki = new Client("Dominik", "Niejaki", libraryWarszawa);
+		Client tomaszPolak = new Client("Tomasz", "Polak", 511223645, libraryBydgoszcz, itsGoodToReadABook);
+		Client karolinaPierwsza = new Client("Karolina", "Pierwsza", 566445125, libraryZakopane, null);
+		Client dominikNiejaki = new Client("Dominik", "Niejaki", 466551352, libraryWarszawa, youShouldRead);
 		clientRepository.saveAll(Arrays.asList(tomaszPolak, karolinaPierwsza, dominikNiejaki));
 
-		Rental rental1 = new Rental(tomaszPolak, infekcja, LocalDate.of(2020, 5, 1), LocalDate.of(2021, 5, 1));
-		Rental rental2 = new Rental(tomaszPolak, zabicDrozda, LocalDate.of(2020, 5, 1), LocalDate.of(2020, 5, 3));
-		Rental rental3 = new Rental(dominikNiejaki, wiedzmin, LocalDate.of(2021, 5, 1), LocalDate.of(2020, 5, 2));
+		Rental rental1 = new Rental(tomaszPolak, null, ClientType.CLIENT, infekcja, LocalDate.of(2020, 5, 1),
+				LocalDate.of(2021, 5, 1));
+		Rental rental2 = new Rental(tomaszPolak, null, ClientType.CLIENT, zabicDrozda, LocalDate.of(2020, 5, 1),
+				LocalDate.of(2020, 5, 3));
+		Rental rental3 = new Rental(dominikNiejaki, null, ClientType.CLIENT, wiedzmin, LocalDate.of(2021, 5, 1),
+				LocalDate.of(2021, 6, 2));
 		rentalRepository.saveAll(Arrays.asList(rental1, rental2, rental3));
 
 	}

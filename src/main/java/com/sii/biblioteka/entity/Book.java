@@ -21,6 +21,7 @@ public class Book {
 	private BookCategory bookCategory = BookCategory.NORMALNA;
 	private String author;
 	private String opis;
+	private float price;
 // wypozyczalnia.id
 	@ManyToOne
 	@JoinColumn(name = "departament_id", nullable = false)
@@ -29,12 +30,14 @@ public class Book {
 	public Book() {
 	}
 
-	public Book(String title, BookCategory bookCategory, String author, String opis, Department department) {
+	public Book(String title, BookCategory bookCategory, String author, String opis, float price,
+			Department department) {
 
 		this.title = title;
 		this.bookCategory = bookCategory;
 		this.author = author;
 		this.opis = opis;
+		this.price = price;
 		this.department = department;
 	}
 
@@ -70,12 +73,28 @@ public class Book {
 		this.author = author;
 	}
 
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
 	public String getOpis() {
 		return opis;
 	}
 
 	public void setOpis(String opis) {
 		this.opis = opis;
+	}
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 
 }
