@@ -4,19 +4,26 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.sii.biblioteka.entity.Book;
 import com.sii.biblioteka.repository.BookRepository;
 import com.sii.biblioteka.util.BookCategory;
 
-@RestController
+@Controller
 public class BookController {
 	@Autowired
 	private BookRepository bookRepository;
+
+	@GetMapping(value = "/booksListing")
+	public String booksListing(Model model) {
+		model.addAttribute("listBooks", bookRepository.findAll());
+		return "books";
+	}
 
 	@GetMapping(value = "/books")
 	public List<Book> getAllBooks() {
