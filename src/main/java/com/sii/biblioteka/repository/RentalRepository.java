@@ -13,8 +13,4 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
 	List<Rental> findAllByClientId(Long id);
 
 	Rental findFirstByBookIdAndEndDateIsNull(Long id);
-
-	List<Rental> findAllByOrganizationIdAndEndDateIsNull(Long organizationId);
-
-	List<Rental> findAllByOrganizationId(Long id);
 }

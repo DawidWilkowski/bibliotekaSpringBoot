@@ -76,9 +76,7 @@ public class Reports {
 	@GetMapping(value = "/noOfRentedBooksByLibrary/{id}")
 	public ResponseEntity<String> noOfRentedBooksByLibrary(@PathVariable("id") Long id) {
 		long noOfRentalsbyClient = rentalRepository.findAllByClientId(id).size();
-		long noOfRentalsbyOrganization = rentalRepository.findAllByOrganizationId(id).size();
-		return new ResponseEntity<String>("No. of rentals: " + (noOfRentalsbyClient + noOfRentalsbyOrganization),
-				HttpStatus.OK);
+		return new ResponseEntity<String>("No. of rentals: " + (noOfRentalsbyClient), HttpStatus.OK);
 	}
 
 }

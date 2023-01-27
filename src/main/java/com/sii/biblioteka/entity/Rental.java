@@ -3,7 +3,6 @@ package com.sii.biblioteka.entity;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sii.biblioteka.util.ClientType;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,11 +27,6 @@ public class Rental {
 	private Client client;
 
 	@ManyToOne
-	@JoinColumn(name = "organization_id", nullable = true)
-	@JsonIgnore
-	private Organization organization;
-
-	@ManyToOne
 	@JoinColumn(name = "book_id", nullable = false)
 	@JsonIgnore
 	private Book book;
@@ -41,16 +35,11 @@ public class Rental {
 	@Temporal(TemporalType.DATE)
 	private LocalDate endDate;
 
-	private ClientType clientType;
-
 	public Rental() {
 	};
 
-	public Rental(Client client, Organization organization, ClientType clientType, Book book, LocalDate startDate,
-			LocalDate endDate) {
+	public Rental(Client client, Book book, LocalDate startDate, LocalDate endDate) {
 		this.client = client;
-		this.organization = organization;
-		this.clientType = clientType;
 		this.book = book;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -95,22 +84,6 @@ public class Rental {
 
 	public void setBook(Book book) {
 		this.book = book;
-	}
-
-	public ClientType getClientType() {
-		return clientType;
-	}
-
-	public void setClientType(ClientType clientType) {
-		this.clientType = clientType;
-	}
-
-	public Organization getOrganization() {
-		return organization;
-	}
-
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
 	}
 
 }

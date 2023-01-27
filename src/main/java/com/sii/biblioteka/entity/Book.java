@@ -17,12 +17,10 @@ public class Book {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String title;
-// private dzial.id;
 	private BookCategory bookCategory = BookCategory.NORMALNA;
 	private String author;
 	private String opis;
 	private float price;
-// wypozyczalnia.id
 	@ManyToOne
 	@JoinColumn(name = "departament_id", nullable = false)
 	private Department department;

@@ -29,11 +29,7 @@ public class Library {
 	@OneToMany(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Client> clients;
 
-	@OneToMany(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<Organization> organization;
-
 	public Library() {
-
 	}
 
 	public Library(String streetName, String city) {
@@ -79,14 +75,6 @@ public class Library {
 
 	public void setClients(Set<Client> clients) {
 		this.clients = clients;
-	}
-
-	public Set<Organization> getOrganization() {
-		return organization;
-	}
-
-	public void setOrganization(Set<Organization> organization) {
-		this.organization = organization;
 	}
 
 	@Override
