@@ -116,12 +116,6 @@ public class RentalController {
 
 	}
 
-	@GetMapping(value = "/UI")
-	public String viewHomePage(Model model) {
-		model.addAttribute("listRentals", rentalRepository.findAll());
-		return "index";
-	}
-
 	/**
 	 * End rental with given id.
 	 * 

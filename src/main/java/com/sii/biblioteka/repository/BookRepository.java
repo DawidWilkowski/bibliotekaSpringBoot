@@ -15,7 +15,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 	List<Book> findByBookCategory(BookCategory bookCategory);
 
-	List<Book> findByOpisContaining(String opis);
+	List<Book> findByDescriptionContaining(String description);
 
 	@Query(value = "SELECT book.id, book.author, book.book_category,book.opis,book.title,book.departament_id,department.name AS department_name FROM book, department WHERE book.departament_id  = department.id AND department.name = ?", nativeQuery = true)
 	List<Book> getBooksByDepartment(String department);
