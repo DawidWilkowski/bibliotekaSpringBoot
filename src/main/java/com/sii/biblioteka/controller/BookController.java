@@ -40,7 +40,6 @@ public class BookController {
 
 	@PostMapping("/saveBook")
 	public String saveEmployee(@ModelAttribute("book") Book book) {
-
 		bookRepository.save(book);
 		return "redirect:/booksListing";
 	}

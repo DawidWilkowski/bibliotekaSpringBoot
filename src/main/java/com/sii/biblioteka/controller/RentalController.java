@@ -7,12 +7,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.sii.biblioteka.entity.Book;
 import com.sii.biblioteka.entity.Client;
@@ -22,7 +22,7 @@ import com.sii.biblioteka.repository.ClientRepository;
 import com.sii.biblioteka.repository.RentalRepository;
 import com.sii.biblioteka.util.BookCategory;
 
-@RestController
+@Controller
 public class RentalController {
 	@Autowired
 	private RentalRepository rentalRepository;
@@ -32,6 +32,12 @@ public class RentalController {
 
 	@Autowired
 	private BookRepository bookRepository;
+
+	@GetMapping(value = "/rentals")
+	public String rentalsListing(Model model) {
+		model.addAttribute("listRentals", rentalRepository.findAll());
+		return "rentals";
+	}
 
 	/**
 	 * Checks if there is any book not returned on time.
@@ -45,17 +51,28 @@ public class RentalController {
 				endDate = LocalDate.now();
 			long daysBetween = ChronoUnit.DAYS.between(rental.getStartDate(), endDate);
 			if (daysBetween > 14) {
-				float penaltyPercent = 0.01F;
+
+				float penaltyPercent = 0.02F;
 				float penalty = rental.getBook().getPrice() * penaltyPercent * daysBetween;
-				if (rental.getBook().getBookCategory() == BookCategory.BESTSELLER) {
-					penaltyPercent = 0.02F;
-					penalty = rental.getBook().getPrice() * penaltyPercent * daysBetween;
-				}
 
 			}
 
 		}
 		return new ResponseEntity<String>("Succesfully checked for penalty", HttpStatus.OK);
+
+	}
+
+	// TO DO: FIELD IN RENTAL THAT SHOWS PENALTY
+	public float checkForPenaltyForBook(Long id) {
+		Rental rentedBook = rentalRepository.findBookById(id);
+
+		LocalDate endDate = rentedBook.getEndDate();
+		if (rentedBook.getEndDate() == null)
+			return 0F;
+		long daysBetween = ChronoUnit.DAYS.between(rentedBook.getStartDate(), endDate);
+		float penaltyPercent = 0.02F;
+		float penalty = rentedBook.getBook().getPrice() * penaltyPercent * daysBetween;
+		return penalty;
 
 	}
 
@@ -85,6 +102,24 @@ public class RentalController {
 	}
 
 	/**
+	 * End rental with given id.
+	 * 
+	 * @param id - rental id
+	 * @throws Exception
+	 */
+	@PutMapping(value = "/endRental/{id}")
+	public void endRental(@PathVariable("id") Long id) throws Exception {
+		Rental rentalToEnd = rentalRepository.findById(id).orElseThrow(() -> new Exception("no rental with this id"));
+		if (rentalToEnd.getEndDate() == null) {
+			rentalToEnd.setEndDate(LocalDate.now());
+			rentalRepository.save(rentalToEnd);
+		} else {
+			throw new Exception("Book already returned");
+
+		}
+	}
+
+	/**
 	 * Checks if book is available for rent: (book is not rented already, max 1
 	 * bestseller limit, max 4 books rented per person )
 	 * 
@@ -93,9 +128,6 @@ public class RentalController {
 	 * @return
 	 */
 	private String checkIfAvaliableForRentForClient(Book book, Client client) {
-		if (client.getLibrary() != book.getDepartment().getLibrary()) {
-			return "book in another library";
-		}
 
 		if (rentalRepository.findFirstByBookIdAndEndDateIsNull(book.getId()) != null)
 			return "book already rented";
@@ -114,24 +146,6 @@ public class RentalController {
 
 		return "1";
 
-	}
-
-	/**
-	 * End rental with given id.
-	 * 
-	 * @param id - rental id
-	 * @throws Exception
-	 */
-	@PutMapping(value = "/endRental/{id}")
-	public void endRental(@PathVariable("id") Long id) throws Exception {
-		Rental rentalToEnd = rentalRepository.findById(id).orElseThrow(() -> new Exception("no rental with this id"));
-		if (rentalToEnd.getEndDate() == null) {
-			rentalToEnd.setEndDate(LocalDate.now());
-			rentalRepository.save(rentalToEnd);
-		} else {
-			throw new Exception("Book already returned");
-
-		}
 	}
 
 }

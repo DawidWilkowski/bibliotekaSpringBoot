@@ -6,4 +6,6 @@ import com.sii.biblioteka.entity.Client;
 
 public interface ClientRepository extends JpaRepository<Client, Long> {
 
+	Client findByUsername(String username);
+
 }

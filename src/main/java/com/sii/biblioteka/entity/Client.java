@@ -8,8 +8,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -24,10 +22,8 @@ public class Client {
 	private Long id;
 	private String name;
 	private String surname;
-	private int phoneNumber;
-	@ManyToOne
-	@JoinColumn(name = "library_id", nullable = false)
-	private Library library;
+	private String username;
+	private String password;
 
 	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Rental> rentals;
@@ -35,11 +31,12 @@ public class Client {
 	public Client() {
 	}
 
-	public Client(String name, String surname, int phoneNumber, Library library) {
+	public Client(String name, String surname, String username, String password) {
 		this.name = name;
-		this.phoneNumber = phoneNumber;
 		this.surname = surname;
-		this.library = library;
+		this.username = username;
+		this.password = password;
+
 	}
 
 	public Long getId() {
@@ -58,14 +55,6 @@ public class Client {
 		this.name = name;
 	}
 
-	public int getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(int phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
 	public String getSurname() {
 		return surname;
 	}
@@ -74,12 +63,20 @@ public class Client {
 		this.surname = surname;
 	}
 
-	public Library getLibrary() {
-		return library;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setLibrary(Library library) {
-		this.library = library;
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

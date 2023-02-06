@@ -11,12 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.sii.biblioteka.entity.Book;
 import com.sii.biblioteka.entity.Client;
 import com.sii.biblioteka.entity.Department;
-import com.sii.biblioteka.entity.Library;
 import com.sii.biblioteka.entity.Rental;
 import com.sii.biblioteka.repository.BookRepository;
 import com.sii.biblioteka.repository.ClientRepository;
 import com.sii.biblioteka.repository.DepartmentRepository;
-import com.sii.biblioteka.repository.LibraryRepository;
 import com.sii.biblioteka.repository.RentalRepository;
 import com.sii.biblioteka.util.BookCategory;
 
@@ -31,8 +29,6 @@ public class BibliotekaSpringBootApplication implements CommandLineRunner {
 	@Autowired
 	BookRepository bookRepository;
 	@Autowired
-	LibraryRepository libraryRepository;
-	@Autowired
 	DepartmentRepository departamentRepository;
 	@Autowired
 	ClientRepository clientRepository;
@@ -43,14 +39,10 @@ public class BibliotekaSpringBootApplication implements CommandLineRunner {
 	 * Initialize H2 database with sample data
 	 */
 	public void run(String... args) throws Exception {
-		Library libraryBydgoszcz = new Library("Mostowa 5", "Bydgoszcz");
-		Library libraryWarszawa = new Library("Kochanowkiego 12", "Warszawa");
-		Library libraryZakopane = new Library("Lipowa 52", "Zakopane");
-		libraryRepository.saveAll(Arrays.asList(libraryBydgoszcz, libraryWarszawa, libraryZakopane));
 
-		Department fantasyBydgoszcz = new Department("Fantasy", libraryBydgoszcz);
-		Department historyczneZakopane = new Department("Historyczne", libraryZakopane);
-		Department naukaWarszawa = new Department("Nauka", libraryWarszawa);
+		Department fantasyBydgoszcz = new Department("Fantasy");
+		Department historyczneZakopane = new Department("Historyczne");
+		Department naukaWarszawa = new Department("Nauka");
 
 		departamentRepository.saveAll(Arrays.asList(fantasyBydgoszcz, historyczneZakopane, naukaWarszawa));
 
@@ -62,14 +54,14 @@ public class BibliotekaSpringBootApplication implements CommandLineRunner {
 				fantasyBydgoszcz);
 		bookRepository.saveAll(Arrays.asList(infekcja, zabicDrozda, wiedzmin));
 
-		Client tomaszPolak = new Client("Tomasz", "Polak", 511223645, libraryBydgoszcz);
-		Client karolinaPierwsza = new Client("Karolina", "Pierwsza", 566445125, libraryZakopane);
-		Client dominikNiejaki = new Client("Dominik", "Niejaki", 466551352, libraryWarszawa);
-		clientRepository.saveAll(Arrays.asList(tomaszPolak, karolinaPierwsza, dominikNiejaki));
+		Client user1 = new Client("ClientName1", "ClientSurname1", "user1", "pass1");
+		Client user2 = new Client("ClientName2", "ClientSurname2", "user2", "pass2");
+		Client user3 = new Client("ClientName3", "ClientSurname3", "user3", "pass3");
+		clientRepository.saveAll(Arrays.asList(user1, user2, user3));
 
-		Rental rental1 = new Rental(tomaszPolak, infekcja, LocalDate.of(2020, 5, 1), LocalDate.of(2021, 5, 1));
-		Rental rental2 = new Rental(tomaszPolak, zabicDrozda, LocalDate.of(2020, 5, 1), LocalDate.of(2020, 5, 3));
-		Rental rental3 = new Rental(dominikNiejaki, wiedzmin, LocalDate.of(2021, 5, 1), LocalDate.of(2021, 6, 2));
+		Rental rental1 = new Rental(user1, infekcja, LocalDate.of(2020, 5, 1), LocalDate.of(2021, 5, 1));
+		Rental rental2 = new Rental(user2, zabicDrozda, LocalDate.of(2020, 5, 1), LocalDate.of(2020, 5, 3));
+		Rental rental3 = new Rental(user3, wiedzmin, LocalDate.of(2021, 5, 1), LocalDate.of(2021, 6, 2));
 		rentalRepository.saveAll(Arrays.asList(rental1, rental2, rental3));
 
 	}
