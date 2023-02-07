@@ -31,5 +31,5 @@ The application is written using Spring framework and Maven
 
 Book Listing.
 
-![](https://https://github.com/DawidWilkowski/librarySpringBoot/blob/master/img/booksListing.png)
+![](https://github.com/DawidWilkowski/librarySpringBoot/blob/master/img/booksListing.png)
 
