@@ -29,7 +29,12 @@ The application is written using Spring framework and Maven
 ## Screenshots
 
 
-Book Listing.
+Book Listing:
 
 ![](https://github.com/DawidWilkowski/librarySpringBoot/blob/master/img/booksListing.png)
 
+Book add form:
+![](https://github.com/DawidWilkowski/librarySpringBoot/blob/master/img/showNewBookForm.png)
+
+Rental Listing:
+![](https://github.com/DawidWilkowski/librarySpringBoot/blob/master/img/rentals.png)
