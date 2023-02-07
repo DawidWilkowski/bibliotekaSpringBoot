@@ -4,7 +4,7 @@ Web application for renting books and library managment.
 
 ## Description
 
-Application allows to make new rentals (via REST),
+Application allows to make new rentals,
 adding books and viewing existing one.
 
 ## Tools & Frameworks
