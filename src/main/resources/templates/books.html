@@ -17,9 +17,11 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #0095ff;">
+     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #0095ff;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+         <a class="navbar-brand" th:href="@{/booksListing}">
+               <img th:src="@{images/icon.png}" style="max-width: 35px;" >
+            Books</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -28,7 +30,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/showNewBookForm">Add Book</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/rentals}">Rentals</a>
@@ -38,8 +40,7 @@
             </div>
         </div>
     </nav>
-
-    <div class="w-75 p-3 mx-auto">
+    <div class="w-50 p-3 mx-auto">
 
         <a th:href="@{/showNewBookForm}" class="btn btn-primary">Add Book </a>
         <br><br>
