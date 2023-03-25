@@ -8,6 +8,6 @@ RUN mvn -f /usr/src/app/pom.xml clean package
 
 # Run stage
 FROM openjdk:17
-COPY --from=build /usr/src/app/target/library-0.0.1-SNAPSHOT.jar /usr/app/library-0.0.1-SNAPSHOT.jar  
+COPY --from=build /usr/src/app/target/bibliotekaSpringBoot-0.0.1-SNAPSHOT.jar /usr/app/bibliotekaSpringBoot-0.0.1-SNAPSHOT.jar  
 EXPOSE 8080  
-ENTRYPOINT ["java","-jar","/usr/app/library-0.0.1-SNAPSHOT.jar"]  
+ENTRYPOINT ["java","-jar","/usr/app/bibliotekaSpringBoot-0.0.1-SNAPSHOT.jar"]  
