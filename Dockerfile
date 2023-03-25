@@ -1,5 +1,3 @@
-11 lines (10 sloc)  371 Bytes
-
 # Build stage
 FROM maven:3.9.0-eclipse-temurin-17 AS build
 COPY src /usr/src/app/src  
