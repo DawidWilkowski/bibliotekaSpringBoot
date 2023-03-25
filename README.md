@@ -2,6 +2,8 @@
 
 Web application for renting books and library managment.
 
+Deployed: https://library-spring-boot.fly.dev/booksListing
+
 ## Description
 
 Application allows to make new rentals,
