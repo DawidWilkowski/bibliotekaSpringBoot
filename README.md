@@ -2,8 +2,9 @@
 
 Web application for renting books and library managment.
 
-Deployed: https://library-spring-boot.fly.dev/booksListing
+Deployed: https://library-389908.lm.r.appspot.com/booksListing
 
+**Hosted on free version of Google Cloud, first start of application may take a while.**
 ## Description
 
 Application allows to make new rentals,
